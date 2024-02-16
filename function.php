@@ -23,29 +23,15 @@ session_start();
 $c = mysqli_connect('localhost','root','','galeri');
 
 // login
-if(isset($_POST['login'])){
-    // initiate variabel 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $check = mysqli_query($c,"SELECT * FROM user WHERE Username='$username' and Password='$password'");
-    $hitung = mysqli_num_rows($check);
-    if($hitung>0){
-        // jika datanya  berhasil ditemukan
-        // berhasil login
-
-        $_SESSION['login'] = 'True';
-        header('location:index.php');
-    } else{
-        // data tidak ditemukan
-        // gagal login
-        echo '
-        <script>alert("Username atau Password salah");
-        window.location.href="login.php"
-        </script>
-        ';
+function login($data){
+    global
+    $c;
+    $username = $data['username'];
+    $password = $data['password'];
+    $query = mysqli_query($c,"SELECT * FROM user WHERE Username='$username' and Password='$password'");
+    $check = mysqli_num_rows($query);
+    return $check;
     }
-}
 
     if(isset($_POST['register'])){
     $username=$_POST['username'];
